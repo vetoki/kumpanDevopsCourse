@@ -39,12 +39,12 @@ try {
 }
 
 // Health check endpoint
-app.get('/healthz', (_req: Request, res: Response) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.status(200).send('OK');
 });
 
 // Liveness probe endpoint
-app.get('/livez', (_req: Request, res: Response) => {
+app.get('/live', (_req: Request, res: Response) => {
   res.status(200).send('OK');
 });
 

@@ -24,7 +24,7 @@ WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
-COPY downloads ./downloadz
+COPY downloads ./downloads
 
 # Expose port
 EXPOSE 8080

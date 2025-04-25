@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: assignment2
-  namespace: YOUR-NAMESPACE-HERE
+  namespace: vetoki
   labels:
     app: assignment2
 spec:
@@ -17,14 +17,14 @@ spec:
     spec:
       containers:
       - name: assignment2
-        image: 289831833738.dkr.ecr.eu-north-1.amazonaws.com/assignment2/YOUR-NAMESPACE-HERE:latest
+        image: 289831833738.dkr.ecr.eu-north-1.amazonaws.com/assignment2/vetoki:latest
         ports:
         - containerPort: 8080
         env:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: assignment2-secretskajdhfsdjakh
+              name: assignment2-secret
               key: DATABASE_URL
         resources:
           requests:
@@ -35,13 +35,13 @@ spec:
             cpu: "500m"
         livenessProbe:
           httpGet:
-            path: /livez
+            path: /live
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 5
         readinessProbe:
           httpGet:
-            path: /healthz
+            path: /health
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 15

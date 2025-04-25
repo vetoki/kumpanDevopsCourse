@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: assignment2-service
-  namespace: YOUR-NAMESPACE-HERE
+  namespace: vetoki
 spec:
   selector:
     app: assignment2

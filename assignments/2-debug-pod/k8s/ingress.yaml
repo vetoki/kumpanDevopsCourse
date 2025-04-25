@@ -2,18 +2,18 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: assignment2-ingress
-  namespace: YOUR-NAMESPACE-HERE
+  namespace: vetoki
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-dns01"
-    external-dns.alpha.kubernetes.io/hostname: "YOUR-NAMESPACE-HERE.a2.kumpan.btlc.dev"
+    external-dns.alpha.kubernetes.io/hostname: "vetoki.a2.kumpan.btlc.dev"
 spec:
   ingressClassName: "nginx"
   tls:
   - hosts:
-    - YOUR-NAMESPACE-HERE.a2.kumpan.btlc.dev
+    - vetoki.a2.kumpan.btlc.dev
     secretName: assignment2-tls
   rules:
-  - host: YOUR-NAMESPACE-HERE.a2.kumpan.btlc.dev
+  - host: vetoki.a2.kumpan.btlc.dev
     http:
       paths:
       - path: /
