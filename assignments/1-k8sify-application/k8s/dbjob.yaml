@@ -13,18 +13,11 @@ spec:
       containers:
       - image: "postgres:latest"
         name: init-db
-        command: [ "psql", "$(DATABASE_URL)", "-f /create-db-table.sql" ]
-        volumeMounts:
-        - name: sqlcommand
-          mountPath: /
+        command: [ "psql", "$(DATABASE_URL)", "CREATE TABLE IF NOT EXISTS prime_cache ( number INTEGER PRIMARY KEY, prime_count INTEGER NOT NULL, calculated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP ); CREATE INDEX IF NOT EXISTS idx_prime_cache_calculated_at ON prime_cache(calculated_at); COMMENT ON TABLE prime_cache IS 'Cache for prime number calculations';" ]
         env:
           - name: DATABASE_URL
             valueFrom:
               secretKeyRef:
                 name: assignment1
                 key: DATABASE_URL
-      volumes:
-        - name: sqlcommand
-          configMap:
-            name: assignment1-configmap
       restartPolicy: OnFailure
