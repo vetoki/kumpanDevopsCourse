@@ -1,0 +1,60 @@
+Assignment 3:
+
+step 0: login
+aws sso login --profile kumpan-devops
+
+
+step 1: terraform
+terragrunt plan
+terragrunt apply
+
+
+step 2: build and deploy
+bash build-and-push.sh vetoki
+
+
+step 3: create role
+aws iam create-role \
+  --role-name lambda-ex \
+--assume-role-policy-document '{"Version": "2012-10-17","Statement": [{ "Effect": "Allow", "Principal": {"Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole"}]}' \
+  --profile kumpan-devops
+
+Output->
+Role:
+  Arn: arn:aws:iam::289831833738:role/lambda-ex
+  AssumeRolePolicyDocument:
+    Statement:
+    - Action: sts:AssumeRole
+      Effect: Allow
+      Principal:
+        Service: lambda.amazonaws.com
+    Version: '2012-10-17'
+  CreateDate: '2025-04-26T11:10:04+00:00'
+  Path: /
+  RoleId: AROAUG62S2CFOJREFYE34
+  RoleName: lambda-ex
+
+
+step 4: create function
+aws lambda create-function \
+  --function-name vetoki-assignment-3 \
+  --package-type Image \
+  --code ImageUri=289831833738.dkr.ecr.eu-north-1.amazonaws.com/assignment3/vetoki:latest \
+  --role arn:aws:iam::289831833738:role/lambda-ex \
+  --profile kumpan-devops
+
+
+
+step 5: test function
+aws lambda invoke --function-name vetoki-assignment-3 response.json --profile kumpan-devops && cat response.json
+
+
+step 6: build new and deploy
+bash build-and-push.sh vetoki
+
+step 7: update function
+aws lambda update-function-code \
+  --function-name vetoki-assignment-3 \
+  --image-uri 289831833738.dkr.ecr.eu-north-1.amazonaws.com/assignment3/vetoki:latest \
+  --publish \
+  --profile kumpan-devops	
