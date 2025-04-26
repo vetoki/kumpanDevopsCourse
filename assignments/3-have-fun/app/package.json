@@ -1,0 +1,13 @@
+{
+  "name": "assignment-3",
+  "version": "1.0.0",
+  "description": "Assignment 3 for devops course",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.149",
+    "esbuild": "^0.25.3"
+  }
+}
